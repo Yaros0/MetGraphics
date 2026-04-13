@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 from numpy import *
 from matplotlib.ticker import LinearLocator, MultipleLocator
 
-# Функция для получения точек графика по функции, нужно задать макс значение и точность
 def get_dots(func, max, dot_num):
+    """Функция для получения точек графика по функции, нужно задать макс значение и точность"""
     x_cords = linspace(-max, max, dot_num)
     y_cords = func(x_cords)
     return x_cords, y_cords
 
-# Функция для получения ввода и построения графика по нему
 def plot_function():
+    """Функция для получения ввода и построения графика по нему"""
     global gr1
     func_str = entry.get()
 
@@ -34,8 +34,8 @@ def plot_function():
     except:
         errlabel.config(text="invalid function!", fg="#ff5555")
 
-#Функция для проверки разрешенных символов
 def check_chars(string):
+    """Функция для проверки разрешенных символов"""
     for char in string:
         if char not in ".x+-*/1234567890 ":
             return False
