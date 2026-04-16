@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from numpy import *
 from matplotlib.ticker import LinearLocator, MultipleLocator
 
-#
 def get_dots(func, max, dot_num):
     """Функция для получения точек графика по функции, нужно задать макс значение и точность"""
     x_cords = linspace(-max, max, dot_num)
@@ -29,7 +28,7 @@ def plot_function():
 def check_chars(string):
     """Функция для проверки разрешенных символов"""
     for char in string:
-        if char not in ".x+-*/1234567890 ":
+        if char not in ",. x+-*/1234567890":
             return False
     return True
 
@@ -52,11 +51,9 @@ errlabel.config(text="your function is empty", background="#222", fg="#ffffff")
 errlabel.pack(pady=10)
 btn = tk.Button(optwind, text="Применить", command=plot_function, bg="#444", fg="white", font=('Sans', 10))
 btn.pack(pady=5)
-show_vers = tk.Label(optwind, width=5, font=('Sans', 10))
-show_vers.config(text="v0.03", background="#222", fg="#ffffff")
-show_vers.place(relx=0.95, rely=0.9, anchor="center")
-optwind.mainloop()
-
+show_vers = tk.Label(optwind, width=10, font=('Sans', 10))
+show_vers.config(text="test-v0.04", background="#222", fg="#ffffff")
+show_vers.place(relx=0.90, rely=0.9, anchor="center")
 
 # Окно отображения функций
 graph_wind = plt.figure(figsize = (8, 5))
@@ -70,4 +67,6 @@ ax.axhline(0, color='black', lw=1.5)
 ax.axvline(0, color='black', lw=1.5)
 gr1, = ax.plot([],[], ls = ' ', marker = 'o', ms = 0.06);
 plt.grid(True)
+
 plt.show()
+optwind.mainloop()
