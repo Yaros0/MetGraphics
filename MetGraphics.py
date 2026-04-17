@@ -52,7 +52,7 @@ errlabel.pack(pady=10)
 btn = tk.Button(optwind, text="Применить", command=plot_function, bg="#444", fg="white", font=('Sans', 10))
 btn.pack(pady=5)
 show_vers = tk.Label(optwind, width=10, font=('Sans', 10))
-show_vers.config(text="test-v0.04", background="#222", fg="#ffffff")
+show_vers.config(text="v0.04", background="#222", fg="#ffffff")
 show_vers.place(relx=0.90, rely=0.9, anchor="center")
 
 # Окно отображения функций
