@@ -18,7 +18,7 @@ if not exist %venv_dir% (
 echo проверяем и скачиваем необходимые файлы...
 call %venv_dir%\Scripts\activate.bat
 python -m pip install --upgrade pip
-pip install matplotlib numpy
+pip install matplotlib numpy re
 
 echo Запускаем MetGraphics...
 python MetGraphics.py
