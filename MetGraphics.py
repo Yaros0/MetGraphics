@@ -2,27 +2,27 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 from numpy import *
 from matplotlib.ticker import LinearLocator, MultipleLocator
-from Simplifier import *
+import Parser
 
-def get_dots(func, max, dot_num):
+def get_dots(func: str, max, dot_num):
     """Функция для получения точек графика по функции, нужно задать макс значение и точность"""
     x_cords = linspace(-max, max, dot_num)
-    y_cords = func(x_cords)
+    y_cords = linspace(0,0, dot_num)
+    for i in range(x_cords.size):
+        calculator.user_expr = func.replace("x", str(x_cords[i]))
+        calculator.simplify_user_expr()
+        y_cords[i] = calculator.calculate_user_expr(False)
     return x_cords, y_cords
 
 def plot_function():
     """Функция для получения ввода и построения графика по нему"""
     global gr1
-    func_str = simplify_expression(entry.get())
+    func_str = entry.get()
     try:
-        if is_valid(func_str) or allow_danger.get():
-            user_func = lambda x: eval(func_str)
-            x, y = get_dots(user_func, 20, 100000)
-            gr1.set_data(x, y)
-            errlabel.config(text="valid function", fg="#ffffff")
-            plt.draw()
-        else:
-            errlabel.config(text="invalid function!", fg="#ff5555")
+        x, y = get_dots(func_str, 20, 10000)
+        gr1.set_data(x, y)
+        errlabel.config(text="valid function", fg="#ffffff")
+        plt.draw()
     except:
         errlabel.config(text="invalid function!", fg="#ff5555")
 
@@ -33,21 +33,20 @@ optwind.title("Функции")
 optwind.geometry("400x300")
 optwind.resizable(False, False)
 optwind.configure(background="#222")
-entry = tk.Entry(optwind, width=30, font=('Sans', 15))
-entry.configure(background="#222", fg="#ffffff", insertbackground="#ffffff")
+#Поле ввода функций
+entry = tk.Entry(optwind, width=30, font=('Sans', 15), background="#222", fg="#ffffff", insertbackground="#ffffff")
 entry.pack(pady=10)
 entry.size()
-allow_danger = tk.BooleanVar()
-switch_danger = tk.Checkbutton(optwind, text="Danger functions", variable=allow_danger)
-switch_danger.configure(background="#222", fg="#ffffff", activebackground="#222", selectcolor="#222", activeforeground="#ffffff")
-switch_danger.place(relx=0.15, rely=0.9, anchor="center")
+#Сообщение о (не)валидности функции
 errlabel = tk.Label(optwind, width=20, font=('Sans', 10))
 errlabel.config(text="your function is empty", background="#222", fg="#ffffff")
 errlabel.pack(pady=10)
-btn = tk.Button(optwind, text="Применить", command=plot_function, bg="#444", fg="white", font=('Sans', 10))
+#Кнопка построения
+btn = tk.Button(optwind, text="Apply", command=plot_function, bg="#444", fg="white", font=('Sans', 10))
 btn.pack(pady=5)
+#Показатель версии
 show_vers = tk.Label(optwind, width=10, font=('Sans', 10))
-show_vers.config(text="test-v0.05", background="#222", fg="#ffffff")
+show_vers.config(text="v-0.05", background="#222", fg="#ffffff")
 show_vers.place(relx=0.90, rely=0.9, anchor="center")
 
 # Окно отображения функций
@@ -62,6 +61,7 @@ ax.axhline(0, color='black', lw=1.5)
 ax.axvline(0, color='black', lw=1.5)
 gr1, = ax.plot([],[], ls = ' ', marker = 'o', ms = 0.06);
 plt.grid(True)
+calculator = Parser.Parser("")
 
 plt.show()
 optwind.mainloop()
